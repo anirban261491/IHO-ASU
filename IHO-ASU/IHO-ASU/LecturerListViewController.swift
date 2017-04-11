@@ -1,37 +1,42 @@
 //
-//  NewsEventsViewController.swift
+//  LecturerListViewController.swift
 //  IHO-ASU
 //
-//  Created by Sweta Singhal on 2/9/17.
+//  Created by Sweta Singhal on 3/30/17.
 //  Copyright © 2017 Sweta Singhal. All rights reserved.
-//
 
 import UIKit
+import CoreData
 
-class NewsEventsViewController: UITableViewController {
+class LecturerListViewController: UITableViewController {
+    @IBOutlet var lecturerTableView: UITableView!
     
-    var newsList:[String : News] = [String : News]()
+    var urlString:String = ""
+    var lecturerList:[String : Lecturer] = [String : Lecturer]()
     var names:[String]=[String]()
+    //    var NumberOfRows = 0
+    //    var newsList = [NSManagedObject]()
+    //    var appDel:AppDelegate?
+    //    var mContext:NSManagedObjectContext?
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.white]
         
-        self.navigationItem.title = "News + Events"
+        self.navigationItem.title = "Lecturers"
         
-        //toolbar
-        let label = UILabel(frame: CGRect(x: CGFloat(0), y: CGFloat(0), width: CGFloat(350), height: CGFloat(21)))
-        label.text = "ASU IHO 2017"
-        label.center = CGPoint(x: view.frame.midX, y: view.frame.height)
-        label.textAlignment = NSTextAlignment.center
-        label.textColor = UIColor.white
-        let toolbarTitle = UIBarButtonItem(customView: label)
-        let flexible = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-        self.toolbarItems = [flexible,toolbarTitle]
+        // getting URL string from Info.plist
+        //        if let infoPlist = Bundle.main.infoDictionary {
+        //            self.urlString = ((infoPlist["ServerURLString"]) as?  String!)!
+        //            NSLog("The default urlString from info.plist is \(self.urlString)")
+        //        } else {
+        //            NSLog("error getting urlString from info.plist")
+        //        }
         
-        //Featured News
-        let url = URL(string:"http://107.170.239.62:3000/featureobjects" )
+        let url = URL(string:"http://107.170.239.62:3000/lectureobjects" )
         
         let task = URLSession.shared.dataTask(with: url!){ (data, response, error) in
             if error != nil
@@ -62,25 +67,30 @@ class NewsEventsViewController: UITableViewController {
                         
                         
                         
-                        if let newsFromJSON = myJSON as? [[String: AnyObject]]{
-                            print("newsFromJSON", newsFromJSON)
-                            for news in newsFromJSON{
-                                let newsObject = News()
-                                if let title = news["title"] as? String,let desc = news["desc"] as? String,let id = news["id"] as? String,let image = news["image"] as? String, let link = news["link"] as? String{
-                                    newsObject.id = id
-                                    newsObject.title = title
-                                    newsObject.desc = desc
-                                    newsObject.image = image
-                                    newsObject.link = link
-                                    self.names.append(newsObject.title)
+                        if let lecturerFromJSON = myJSON as? [[String: AnyObject]]{
+                            print("lecturerFromJSON", lecturerFromJSON)
+                            for lecturer in lecturerFromJSON{
+                                let lecturerObject = Lecturer()
+                                if let title = lecturer["title"] as? String,let bio = lecturer["bio"] as? String,let id = lecturer["id"] as? String,let image = lecturer["image"] as? String, let link = lecturer["link"] as? String, let name = lecturer["name"] as? String, let email = lecturer["email"] as? String{
+                                    lecturerObject.id = id
+                                    lecturerObject.title = title
+                                    lecturerObject.bio = bio
+                                    lecturerObject.image = image
+                                    lecturerObject.link = link
+                                    lecturerObject.name = name
+                                    lecturerObject.email = email
+                                    self.names.append(lecturerObject.title)
                                     //print(title)
                                     
                                 }
                                 //self.news?.append(newsObject)
-                                self.newsList[newsObject.title] = newsObject
+                                self.lecturerList[lecturerObject.title] = lecturerObject
                             }
                         }
                         
+                        //print (self.news)
+                        //self.tableView.reloadData()
+                        self.lecturerTableView.reloadData()
                         
                         
                     }
@@ -94,16 +104,19 @@ class NewsEventsViewController: UITableViewController {
         }
         task.resume()
         
-        
+        //toolbar
+        let label = UILabel(frame: CGRect(x: CGFloat(0), y: CGFloat(0), width: CGFloat(350), height: CGFloat(21)))
+        label.text = "ASU IHO 2017"
+        label.center = CGPoint(x: view.frame.midX, y: view.frame.height)
+        label.textAlignment = NSTextAlignment.center
+        label.textColor = UIColor.white
+        let toolbarTitle = UIBarButtonItem(customView: label)
+        let flexible = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        self.toolbarItems = [flexible,toolbarTitle]
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.navigationController?.navigationBar.barTintColor = UIColor(red: CGFloat((3 / 255.0)), green: CGFloat((36 / 255.0)), blue: CGFloat((83 / 255.0)), alpha: CGFloat(1))
-        
-        self.navigationController?.navigationBar.tintColor = UIColor.white
-        
-        self.navigationController!.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName : UIColor.white]
         self.navigationController?.setToolbarHidden(false, animated: false)
     }
     
@@ -119,27 +132,41 @@ class NewsEventsViewController: UITableViewController {
     
     // MARK: - Table view data source
     
-    //    override func numberOfSections(in tableView: UITableView) -> Int {
-    //        // #warning Incomplete implementation, return the number of sections
-    //        return 3
-    //    }
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        // #warning Incomplete implementation, return the number of sections
+        return 1
+    }
+    
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        // #warning Incomplete implementation, return the number of rows
+        //print("rows",self.names.count)
+        return self.names.count
+    }
+    
+    //    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    //        let cell = tableView.dequeueReusableCellWithIdentifier("News Cell", forIndexPath: indexPath)
     //
-    //    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    //        // #warning Incomplete implementation, return the number of rows
-    //        return 0
+    //        cell.textLabel?.text = self.names[indexPath.row]
+    //        //cell.detailTextLabel?.text = "Testing huhhahhahah"
+    //        return cell
     //    }
     
     
     
-    /*
-     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-     let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-     
-     // Configure the cell...
-     
-     return cell
-     }
-     */
+    
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = lecturerTableView.dequeueReusableCell(withIdentifier: "Lecturer Cell", for: indexPath)
+        
+        // Configure the cell...
+        cell.textLabel?.text = self.names[indexPath.row]
+        
+        
+        
+        
+        return cell
+    }
+    
     
     /*
      // Override to support conditional editing of the table view.
@@ -188,25 +215,28 @@ class NewsEventsViewController: UITableViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         NSLog("seque identifier is \(segue.identifier)")
-        if segue.identifier == "FeaturedNews" {
-            let viewController:FeaturedNewsViewController = segue.destination as! FeaturedNewsViewController
+        if segue.identifier == "LecturerDetail" {
+            let viewController:LecturerDetailViewController = segue.destination as! LecturerDetailViewController
             let indexPath = self.tableView.indexPathForSelectedRow!
             
             //let moviedata = self.tableView.indexPathForSelectedRow
             
             // let aMovie = movieLib.movies[movieLib.names[indexPath.row]]! as MovieDescription
             let title = self.names[(indexPath.row)]
-            let newsObjectToBeSend = newsList[title]! as News
+            let lecturerObjectToBeSend = lecturerList[title]! as Lecturer
             
             //print( "Trying to print selected news object ", newsList[title]?.desc ?? "No value" , title)
             
             
             viewController.newsTitle = title
-            viewController.newsDesc = newsObjectToBeSend.desc
-            viewController.newsId = newsObjectToBeSend.id
-            viewController.newsImage = newsObjectToBeSend.image
-            viewController.newsLink = newsObjectToBeSend.link
+            viewController.newsBio = lecturerObjectToBeSend.bio
+            viewController.newsId = lecturerObjectToBeSend.id
+            viewController.newsImage = lecturerObjectToBeSend.image
+            viewController.newsLink = lecturerObjectToBeSend.link
+            viewController.newsName = lecturerObjectToBeSend.name
+            viewController.newsEmail = lecturerObjectToBeSend.email
         }
     }
     
 }
+

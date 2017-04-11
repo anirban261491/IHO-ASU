@@ -1,25 +1,21 @@
 //
-//  EventsDetailViewController.swift
+//  LecturerDetailViewController.swift
 //  IHO-ASU
 //
-//  Created by Sweta Singhal on 3/29/17.
+//  Created by Sweta Singhal on 3/30/17.
 //  Copyright © 2017 Sweta Singhal. All rights reserved.
 //
 
 import Foundation
+import MessageUI
 import UIKit
 
-class EventsDetailViewController: UITableViewController {
-    @IBOutlet weak var registerButton: UIButton!
+
+class LecturerDetailViewController: UITableViewController, MFMailComposeViewControllerDelegate {
     
-    @IBOutlet weak var mapItButton: UIButton!
-    @IBAction func mapIt(_ sender: Any) {
-        print("Event Location", eventLocation!)
-        
-        
-       eventLocation = eventLocation!.replacingOccurrences(of: " ", with: "%20")
-        
-        let url = URL(string: eventLocation!)!
+    
+    @IBAction func linkReadMore(_ sender: Any) {
+        let url = URL(string: newsLink!)!
         
         if #available(iOS 10.0, *) {
             UIApplication.shared.open(url, options: [:], completionHandler: nil)
@@ -28,30 +24,42 @@ class EventsDetailViewController: UITableViewController {
         }
 
     }
-    @IBAction func registerLink(_ sender: Any) {
-        let url = URL(string: eventRegURL!)!
+    @IBAction func lEmail(_ sender: Any) {
         
-        if #available(iOS 10.0, *) {
-            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        if MFMailComposeViewController.canSendMail() {
+            print("Can send mail \n \n")
+            let mail = MFMailComposeViewController()
+            mail.mailComposeDelegate = self
+            mail.setToRecipients([newsEmail!])
+            mail.setSubject("Ask a question")
+            mail.setMessageBody("<p>Enter your question here</p>", isHTML: true)
+            
+            present(mail, animated: true)
         } else {
-            UIApplication.shared.openURL(url)
+            // show failure alert
         }
+      
+        
 
     }
     
-    @IBOutlet weak var descDetail: UILabel!
-    @IBOutlet weak var whereDetail: UILabel!
-    @IBOutlet weak var whenDetail: UILabel!
-    @IBOutlet weak var eventTitle: UILabel!
+    @IBAction func lGallery(_ sender: Any) {
+    }
+    @IBOutlet weak var nImage: UIImageView!
+    @IBOutlet weak var buttonReadMore: UIButton!
+    @IBOutlet weak var nTitle: UILabel!
+    @IBOutlet weak var lecEmail: UIButton!
     
-    var eTitle: String?
-    var eventDesc: String?
-    var eventId: String?
-    var eventLocation: String?
-    var eventRegURL: String?
-    var eventDate: String?
-    var eventPlace: String?
-    
+    @IBOutlet weak var gallery: UIButton!
+    @IBOutlet weak var nDesc: UILabel!
+    @IBOutlet weak var lecTitle: UILabel!
+    var newsTitle: String?
+    var newsBio: String?
+    var newsId: String?
+    var newsImage: String?
+    var newsLink: String?
+    var newsName: String?
+    var newsEmail: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -66,32 +74,35 @@ class EventsDetailViewController: UITableViewController {
         self.tableView.separatorStyle = UITableViewCellSeparatorStyle.none
         //tableView.separatorStyle = UITableViewCellSeparatorStyle.none
         
-        mapItButton.layer.cornerRadius = 15
-        registerButton.layer.cornerRadius = 15
+        buttonReadMore.layer.cornerRadius = 15
+        gallery.layer.cornerRadius = 15
+        lecEmail.layer.cornerRadius = 15
         
-       // print("Inside News detail view controller")
-        //print("News Title", eTitle ?? "no value")
-        //print("News Id",eventId ?? "no value")
-       // print("News Desc",eventDesc ?? "no value")
-        //print("Event Location", eventLocation ?? "no value")
-        //print("News Link", eventRegURL ?? "no value")
+        print("Inside News detail view controller")
+        print("News Title", newsTitle ?? "no value")
+        print("News Id",newsId ?? "no value")
+        print("News Bio",newsBio ?? "no value")
+        print("News Image", newsImage ?? "no value")
+        print("News Link", newsLink ?? "no value")
         
-        eventTitle.text = eTitle
-        eventTitle.lineBreakMode = NSLineBreakMode.byWordWrapping
-        eventTitle.numberOfLines = 0
-        descDetail.text = eventDesc
-        descDetail.lineBreakMode = NSLineBreakMode.byWordWrapping
-        descDetail.numberOfLines = 0
+        nTitle.text = newsName
+        nTitle.lineBreakMode = NSLineBreakMode.byWordWrapping
+        nTitle.numberOfLines = 0
+        nDesc.text = newsBio
+        nDesc.lineBreakMode = NSLineBreakMode.byWordWrapping
+        nDesc.numberOfLines = 0
+        lecTitle.text = newsTitle
+        lecTitle.lineBreakMode = NSLineBreakMode.byWordWrapping
+        lecTitle.numberOfLines = 0
         
-        whereDetail.text = eventPlace
-        whereDetail.lineBreakMode = NSLineBreakMode.byWordWrapping
-        whereDetail.numberOfLines = 0
-        
-        whenDetail.text = eventDate
-        whenDetail.lineBreakMode = NSLineBreakMode.byWordWrapping
-        whenDetail.numberOfLines = 0
-        
-    
+        if (newsImage != nil)
+        {
+            //base64 string to NSData
+            let decodedData = NSData(base64Encoded: newsImage!, options: NSData.Base64DecodingOptions(rawValue: 0))
+            
+            //NSData to UIImage
+            nImage.image = UIImage(data: decodedData! as Data)
+        }
         
         
         
@@ -197,4 +208,5 @@ class EventsDetailViewController: UITableViewController {
      */
     
 }
+
 
