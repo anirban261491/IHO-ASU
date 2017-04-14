@@ -1,31 +1,31 @@
 //
-//  DonationController.swift
+//  CreditsViewController.swift
 //  IHO-ASU
 //
-//  Created by Arpit Jaiswal on 2/8/17.
+//  Created by Sweta Singhal on 4/13/17.
 //  Copyright © 2017 Sweta Singhal. All rights reserved.
 //
 
+
 import UIKit
 
-
-class DonationController: UIViewController {
+class CreditsViewController: UIViewController {
     
-  
-
+    @IBOutlet weak var creditsView: UIWebView!
+    
     override func viewDidLoad() {
+        
         super.viewDidLoad()
-        self.navigationController?.navigationBar.isHidden=false
-
-        // Do any additional setup after loading the view.
+        
+        self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.white]
+        
+        self.navigationItem.title = "Credits"
+        creditsView.loadRequest(URLRequest(url: URL(fileURLWithPath: Bundle.main.path(forResource: "CreditDetails", ofType: "html")!)))
+        
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-    @IBAction func webViewer(_ sender: Any) {
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -37,8 +37,6 @@ class DonationController: UIViewController {
         self.navigationController!.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName : UIColor.white]
         self.navigationController?.setToolbarHidden(false, animated: false)
     }
-
-
     
-
+    
 }
