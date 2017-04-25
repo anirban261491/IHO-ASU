@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AboutViewController: UIViewController {
+class AboutViewController: UIViewController , UIWebViewDelegate {
 
     @IBAction func mapIt(_ sender: Any) {
         
@@ -19,10 +19,22 @@ class AboutViewController: UIViewController {
     override func viewDidLoad() {
         
         super.viewDidLoad()
-        
-        
-        
+        aboutView.scrollView.isScrollEnabled = false
+        self.aboutView.delegate = self
+        self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.white]
+        self.navigationItem.title = "About"
         aboutView.loadRequest(URLRequest(url: URL(fileURLWithPath: Bundle.main.path(forResource: "About", ofType: "html")!)))
+        
+        //toolbar
+        let label = UILabel(frame: CGRect(x: CGFloat(0), y: CGFloat(0), width: CGFloat(350), height: CGFloat(21)))
+        label.text = "ASU IHO 2017"
+        label.center = CGPoint(x: view.frame.midX, y: view.frame.height)
+        label.textAlignment = NSTextAlignment.center
+        label.textColor = UIColor.white
+        let toolbarTitle = UIBarButtonItem(customView: label)
+        let flexible = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        self.toolbarItems = [flexible,toolbarTitle]
+
 
         
        
@@ -30,6 +42,17 @@ class AboutViewController: UIViewController {
       //  aboutView.loadRequest(NSURLRequest(URL : NSURL(fileURLWithpath : NSBundle.mainBundle().pathForResource("About", ofType:"html")!)!))
 
         // Do any additional setup after loading the view.
+    }
+    
+    func webView(_ webView: UIWebView, shouldStartLoadWith request: URLRequest, navigationType: UIWebViewNavigationType) -> Bool {
+        
+        if navigationType == UIWebViewNavigationType.linkClicked {
+            UIApplication.shared.openURL(request.url!)
+            return false
+        }
+        
+        return true
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -39,6 +62,8 @@ class AboutViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        self.navigationController?.navigationBar.isHidden=false;
         self.navigationController?.navigationBar.barTintColor = UIColor(red: CGFloat((3 / 255.0)), green: CGFloat((36 / 255.0)), blue: CGFloat((83 / 255.0)), alpha: CGFloat(1))
         
         self.navigationController?.navigationBar.tintColor = UIColor.white

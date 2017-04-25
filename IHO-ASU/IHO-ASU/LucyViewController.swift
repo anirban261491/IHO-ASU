@@ -24,7 +24,7 @@ class LucyViewController: UIViewController {
         var baseURL = URL(fileURLWithPath: "\(Bundle.main.bundlePath)")
         self.lucyLogo.scalesPageToFit = false
         self.lucyLogo.loadHTMLString(html!, baseURL: baseURL)
-        self.lucyLogo.scrollView.isScrollEnabled = false
+        self.lucyLogo.scrollView.isScrollEnabled = true
         
         
         //toolbar
@@ -40,6 +40,8 @@ class LucyViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        self.navigationController?.navigationBar.isHidden=false;
         self.navigationController?.setToolbarHidden(false, animated: false)
     }
     
