@@ -15,6 +15,8 @@
 		230EE90A1E4E147100B4F9F9 /* invest.png in Resources */ = {isa = PBXBuildFile; fileRef = 230EE9031E4E147100B4F9F9 /* invest.png */; };
 		230EE90B1E4E147100B4F9F9 /* search-icon-64.png in Resources */ = {isa = PBXBuildFile; fileRef = 230EE9041E4E147100B4F9F9 /* search-icon-64.png */; };
 		230EE90D1E4E149800B4F9F9 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 230EE90C1E4E149800B4F9F9 /* Info.plist */; };
+		5AF24FBA1EB721E800C5619C /* skull_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 5AF24FB91EB721E800C5619C /* skull_logo.png */; };
+		5AF24FBC1EB7262E00C5619C /* cross.png in Resources */ = {isa = PBXBuildFile; fileRef = 5AF24FBB1EB7262E00C5619C /* cross.png */; };
 		9F30DEAB1E8EC79E00F40E06 /* askananthropologist.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 9F30DE7B1E8EC79E00F40E06 /* askananthropologist.jpg */; };
 		9F30DEAC1E8EC79E00F40E06 /* AskAnAnthropologistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F30DE7C1E8EC79E00F40E06 /* AskAnAnthropologistViewController.swift */; };
 		9F30DEAD1E8EC79E00F40E06 /* BecomingHumanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F30DE7D1E8EC79E00F40E06 /* BecomingHumanViewController.swift */; };
@@ -118,6 +120,8 @@
 		230EE9031E4E147100B4F9F9 /* invest.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = invest.png; sourceTree = "<group>"; };
 		230EE9041E4E147100B4F9F9 /* search-icon-64.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "search-icon-64.png"; sourceTree = "<group>"; };
 		230EE90C1E4E149800B4F9F9 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5AF24FB91EB721E800C5619C /* skull_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = skull_logo.png; sourceTree = "<group>"; };
+		5AF24FBB1EB7262E00C5619C /* cross.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cross.png; sourceTree = "<group>"; };
 		9F30DE7B1E8EC79E00F40E06 /* askananthropologist.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = askananthropologist.jpg; sourceTree = "<group>"; };
 		9F30DE7C1E8EC79E00F40E06 /* AskAnAnthropologistViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AskAnAnthropologistViewController.swift; sourceTree = "<group>"; };
 		9F30DE7D1E8EC79E00F40E06 /* BecomingHumanViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BecomingHumanViewController.swift; sourceTree = "<group>"; };
@@ -307,6 +311,8 @@
 				9F30DEA31E8EC79E00F40E06 /* Science.swift */,
 				9F30DEA41E8EC79E00F40E06 /* sediments.jpg */,
 				9F30DEA51E8EC79E00F40E06 /* skull.html */,
+				5AF24FB91EB721E800C5619C /* skull_logo.png */,
+				5AF24FBB1EB7262E00C5619C /* cross.png */,
 				9F30DEA61E8EC79E00F40E06 /* travellearnimge.jpg */,
 				9F30DEA71E8EC79E00F40E06 /* TravelViewController.swift */,
 				9F30DEA81E8EC79E00F40E06 /* twitter.png */,
@@ -500,12 +506,14 @@
 				230EE9051E4E147100B4F9F9 /* About.html in Resources */,
 				9F84B6481EADEC51007F74CB /* featuredNews.json in Resources */,
 				230EE9071E4E147100B4F9F9 /* ASU IHO vertical.jpg in Resources */,
+				5AF24FBA1EB721E800C5619C /* skull_logo.png in Resources */,
 				9F36EA531EA01D380041582B /* news.json in Resources */,
 				9FB7C58A1E4AAA5900B88166 /* LaunchScreen.storyboard in Resources */,
 				9FB7C5871E4AAA5900B88166 /* Assets.xcassets in Resources */,
 				230EE90A1E4E147100B4F9F9 /* invest.png in Resources */,
 				9F30DED41E8EC79E00F40E06 /* sediments.jpg in Resources */,
 				9F30DED51E8EC79E00F40E06 /* skull.html in Resources */,
+				5AF24FBC1EB7262E00C5619C /* cross.png in Resources */,
 				9F30DED21E8EC79E00F40E06 /* rsz_iho_h_mg.png in Resources */,
 				9FB7C5821E4AAA5900B88166 /* Main.storyboard in Resources */,
 				9FFC3B741EA840FF004A0597 /* IHO_Gallery_main.jpg in Resources */,

@@ -8,21 +8,34 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController,UIGestureRecognizerDelegate {
     
     @IBOutlet weak var skullLogo: UIWebView!
     
+    @IBOutlet weak var SkullImageView: UIImageView!
+    @IBOutlet weak var SkullLabel: UILabel!
     @IBOutlet weak var donate: UIButton!
     @IBOutlet weak var about: UIButton!
     @IBOutlet weak var gallery: UIButton!
     @IBOutlet weak var connect: UIButton!
     @IBOutlet weak var field: UIButton!
     @IBOutlet weak var news: UIButton!
+    @IBOutlet var SkullView: UIView!
     var htmlpath: String? = nil
-    
+    var IHOfacts = [String]()
     override func viewDidLoad() {
         super.viewDidLoad()
+        SkullView.layer.borderColor=UIColor.white.cgColor
+        SkullView.layer.borderWidth=2.0
+        SkullView.layer.cornerRadius=5.0
+        IHOfacts.append("The Institute of Human Origins (IHO) is one of the preeminent organizations in the world devoted to the science of human origins.")
+        IHOfacts.append("IHO research on how we “became human” ranges from analysis of fossil teeth, skull development, and behavioral psychology to archaeology, paleoecology, and geology.")
+        IHOfacts.append("IHO Founding Director Donald Johanson discovered the fossil bones known as \"Lucy\" in Hadar, Ethiopia, in 1974.")
+        IHOfacts.append("IHO leads travel adventures to exciting places like the Galapagos Islands, French prehistoric caves, and South African research sites.")
         
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(ViewController.imageTapped(sender:)))
+        tapGesture.delegate=self;
+        SkullImageView.addGestureRecognizer(tapGesture)
         UINavigationBar.appearance().barTintColor = UIColor(red: CGFloat((255.0 / 255.0)), green: CGFloat((255.0 / 255.0)), blue: CGFloat((255.0 / 255.0)), alpha: CGFloat(1))
         
         // button sytle
@@ -69,6 +82,36 @@ class ViewController: UIViewController {
     }
     
     
+    func imageTapped(sender: UITapGestureRecognizer? = nil) {
+        let tapPoint=sender?.location(in: SkullImageView)
+        if((tapPoint?.x)!>0&&(tapPoint?.x)!<SkullImageView.frame.size.width/2)
+        {
+            if((tapPoint?.y)!>0&&(tapPoint?.y)!<SkullImageView.frame.size.height/2)
+            {
+                SkullLabel.text=IHOfacts[0]
+            }
+            else
+            {
+                SkullLabel.text=IHOfacts[1]
+            }
+        }
+        else
+        {
+            if((tapPoint?.y)!>0&&(tapPoint?.y)!<SkullImageView.frame.size.height/2)
+            {
+                SkullLabel.text=IHOfacts[2]
+            }
+            else
+            {
+                SkullLabel.text=IHOfacts[3]
+            }
+        }
+        SkullView.frame=CGRect(x: 5, y: 5, width: SkullImageView.frame.size.width-10, height: SkullImageView.frame.size.height-10)
+        SkullImageView.addSubview(SkullView)
+    }
+    
+    
+    
     func buttonAction(sender: UIButton!) {
         var btnsendtag: UIButton = sender
         if btnsendtag.tag == 1 {
@@ -86,6 +129,10 @@ class ViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         self.navigationController?.setToolbarHidden(true, animated: false)
+    }
+    
+    @IBAction func skullCrossPressed(_ sender: Any) {
+        SkullView.removeFromSuperview();
     }
     
     override func didReceiveMemoryWarning() {
